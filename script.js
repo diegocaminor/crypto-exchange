@@ -5,6 +5,7 @@ const app = new Vue({
         name: 'Bitcoin',
         img: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
         changePercent: 0,
+        color: 'f4f4f4',
         price: 8400,
         pricesWithDays: [
             { day: 'Lunes', value: 8400 },
@@ -20,7 +21,9 @@ const app = new Vue({
   },
   methods: {
     toogleShowPrices() {
-      this.showPrices = !this.showPrices;
+      this.showPrices = !this.showPrices
+      this.color = this.color.split('')
+        .reverse().join('')
     }
   }
 })
