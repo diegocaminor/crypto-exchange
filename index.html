@@ -11,7 +11,16 @@
 
       <coin-detail
         v-on:change-color="updateColor"
-        v-bind:coin="btc"></coin-detail>
+        v-bind:coin="btc">
+        <template v-slot:text>
+          <p>Estoy inyectando html desde el componente padre a mi hijo con slot <br>
+          <strong>Slot:</strong> Api de distribución de contenido, que permite que un componente padre inyecte a un componente hijo.
+          </p>
+        </template>
+        <template v-slot:link>
+          <a href="#">Link!</a>
+        </template>
+        </coin-detail>
 
     </div>
   </body>
