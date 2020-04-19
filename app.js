@@ -1,15 +1,72 @@
+Vue.component('CoinDetail', {
+  props: ['coin'],
+  data() {
+    return {
+      showPrices: false,
+      value: 0
+    }
+  },
+  methods: {
+    toogleShowPrices() {
+      this.showPrices = !this.showPrices
+    }
+  },
+  computed: {
+    title() {
+      return ` ${this.coin.name} + ${this.coin.symbol}`
+    },
+    convertedValue() {
+      if(!this.value) {
+        return 0
+      }
+      return this.value / this.coin.price
+    }
+  },
+  template: `
+    <div>
+      <img
+        v-on:mouseover="toogleShowPrices"
+        v-on:mouseout="toogleShowPrices"
+        v-bind:src="coin.img" v-bind:alt="coin.name"
+      >
+      <h1 v-bind:class="coin.changePercent>0? 'green': 'red'">
+        {{ title }}
+        <span v-if="coin.changePercent > 0">👍</span>
+        <span v-else-if="coin.changePercent < 0">👎</span>
+        <span v-else>🖖</span>
+        <span v-on:click="toogleShowPrices">{{ showPrices ? '🙈': '🙉'}}</span>
+      </h1>
+
+      <input type="number" v-model="value">
+      <span>{{ convertedValue }}</span>
+
+      <ul v-show=showPrices>
+        <li
+          class="uppercase"
+          v-bind:class="{
+              orange: p.value == coin.price,
+              red: p.value < coin.price,
+              green: p.value > coin.price }"
+          v-for="(p, i ) in coin.pricesWithDays"
+          v-bind:key="p.day">
+          {{i}} : {{p.day}} - el valor fue {{p.value}}
+        </li>
+      </ul>
+    </div>
+    `
+})
+
 const app = new Vue({
   el:'#app',
   data () {
       return {
-        name: 'Bitcoin',
-        symbol: 'BTC',
-        img: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
-        changePercent: 0,
-        value: 0,
-        color: 'f4f4f4',
-        price: 8400,
-        pricesWithDays: [
+        btc: {
+          name: 'Bitcoin',
+          symbol: 'BTC',
+          img: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
+          changePercent: 10,
+          price: 8400,
+          pricesWithDays: [
             { day: 'Lunes', value: 8400 },
             { day: 'Martes', value: 7900 },
             { day: 'Miercoles', value: 8200 },
@@ -17,37 +74,16 @@ const app = new Vue({
             { day: 'Viernes', value: 9400 },
             { day: 'Sabado', value: 10000 },
             { day: 'Domingo', value: 10200 },
-        ],
-        showPrices: false
+          ],
+        },
+        color: 'f4f4f4',
       }
   },
-  // Propiedades computadas (Computed) = propiedades que se calculan en tiempo real en base a los valores de otras propiedades.
-  // Watcher = Funciones que ejecutan un código es decir que por medio de un cambio de la observación de una variable se puede disparar determinado código o ejecutar una función.
-  // Podemos pensarlo como un Disparador de código.
-  computed: {
-    title() {
-      return ` ${this.name} + ${this.symbol}`
-    },
-    convertedValue() {
-      if(!this.value) {
-        return 0
-      }
-      return this.value / this.price
-    }
-  },
-
-  // El nombre de la función se tiene que corresponder con el nombre de una propiedad en data
-  watch: {
-    showPrices(newVal, oldVal) {
-      console.log(newVal, oldVal)
-    }
-  },
-
-  methods: {
-    toogleShowPrices() {
-      this.showPrices = !this.showPrices
-      this.color = this.color.split('')
-        .reverse().join('')
-    }
-  }
+  // methods: {
+  //   toogleShowPrices() {
+  //     this.showPrices = !this.showPrices
+  //     this.color = this.color.split('')
+  //       .reverse().join('')
+  //   }
+  // }
 })
