@@ -89,19 +89,14 @@ export default {
 
   computed: {
     filteredAssets() {
-      const altOrder = this.sortOrder == 1 ? -1 : 1
       return this.assets
         .filter(
           a =>
             a.symbol.toLowerCase().includes(this.filter.toLowerCase()) ||
             a.name.toLowerCase().includes(this.filter.toLowerCase())
         )
-        .sort((a, b) => {
-          if (parseInt(a.rank) > parseInt(b.rank)) {
-            return this.sortOrder
-          }
-
-          return altOrder
+        .sort(() => {
+          return this.sortOrder
         })
     }
   },
