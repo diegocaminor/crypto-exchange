@@ -3,8 +3,10 @@
     <thead>
       <tr class="bg-gray-100 border-b-2 border-gray-400">
         <th></th>
-        <th :class="{ up: this.sortOrder == 1, down: this.sortOrder == -1}">
-          <span class="underline cursor-pointer" @click="changeSortOrder">Ranking</span>
+        <th :class="{ up: this.sortOrder == 1, down: this.sortOrder == -1 }">
+          <span class="underline cursor-pointer" @click="changeSortOrder"
+            >Ranking</span
+          >
         </th>
         <th>Nombre</th>
         <th>Precio</th>
@@ -43,18 +45,23 @@
           <router-link
             class="hover:underline text-blue-600"
             :to="{ name: 'coin-detail', params: { id: a.id } }"
-          >{{ a.name }}</router-link>
+            >{{ a.name }}</router-link
+          >
           <small class="ml-1 text-gray-500">{{ a.symbol }}</small>
         </td>
         <td>{{ a.priceUsd | dollar }}</td>
         <td>{{ a.marketCapUsd | dollar }}</td>
         <td
           :class="
-            a.changePercent24Hr.includes('-')
-              ? 'text-red-600'
+            a.changePercent24Hr
+              ? a.changePercent24Hr.includes('-')
+                ? 'text-red-600'
+                : 'text-green-600'
               : 'text-green-600'
           "
-        >{{ a.changePercent24Hr | percent }}</td>
+        >
+          {{ a.changePercent24Hr | percent }}
+        </td>
         <td class="hidden sm:block">
           <px-button @custom-click="goToCoin(a.id)">
             <span>Detalle</span>
