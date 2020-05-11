@@ -1,3 +1,5 @@
 # Crypto-Exchange
 
-Crypto Exchange es una plataforma para visualizar todas las criptomonedas y sus valores en tiempo real utilizando Vue.js un framework para desarrollar sitios web reactivos y basados en componentes muy utilizado en el mundo del desarrollo web.
+Single Page Application with Vue, Node, TailwindCss and web components consuming Crypto currencies API.
+
+![](demo-images/CryptExchange.png)
